@@ -35,54 +35,61 @@ const Index = () => {
   );
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Top 100 Hacker News Stories</h1>
-      <Input
-        type="text"
-        placeholder="Search stories..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="mb-4"
-      />
-      {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[...Array(9)].map((_, index) => (
-            <Card key={index} className="w-full">
-              <CardHeader>
-                <Skeleton className="h-4 w-3/4 mb-2" />
-              </CardHeader>
-              <CardContent>
-                <Skeleton className="h-4 w-full mb-2" />
-                <Skeleton className="h-4 w-2/3" />
-              </CardContent>
-              <CardFooter>
-                <Skeleton className="h-8 w-24" />
-              </CardFooter>
-            </Card>
-          ))}
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white p-8">
+      <div className="container mx-auto">
+        <h1 className="text-4xl font-bold mb-8 text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+          Top 100 Hacker News Stories
+        </h1>
+        <div className="mb-8">
+          <Input
+            type="text"
+            placeholder="Search stories..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:ring-purple-500 focus:border-purple-500"
+          />
         </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredStories.map(story => (
-            <Card key={story.id} className="w-full">
-              <CardHeader>
-                <CardTitle>{story.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600">Upvotes: {story.score}</p>
-              </CardContent>
-              <CardFooter>
-                <Button
-                  variant="outline"
-                  onClick={() => window.open(story.url, '_blank')}
-                >
-                  Read More
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
-      )}
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(9)].map((_, index) => (
+              <Card key={index} className="bg-gray-800 border-gray-700 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <CardHeader>
+                  <Skeleton className="h-4 w-3/4 mb-2 bg-gray-700" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-4 w-full mb-2 bg-gray-700" />
+                  <Skeleton className="h-4 w-2/3 bg-gray-700" />
+                </CardContent>
+                <CardFooter>
+                  <Skeleton className="h-8 w-24 bg-gray-700" />
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredStories.map(story => (
+              <Card key={story.id} className="bg-gray-800 border-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <CardHeader>
+                  <CardTitle className="text-lg font-semibold text-purple-300">{story.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-400">Upvotes: {story.score}</p>
+                </CardContent>
+                <CardFooter>
+                  <Button
+                    variant="outline"
+                    onClick={() => window.open(story.url, '_blank')}
+                    className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0 hover:from-purple-600 hover:to-pink-600 transition-all duration-300"
+                  >
+                    Read More
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
