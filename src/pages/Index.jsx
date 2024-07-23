@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 
 const Index = () => {
   const [stories, setStories] = useState([]);
@@ -44,29 +45,43 @@ const Index = () => {
         className="mb-4"
       />
       {loading ? (
-        <div>
-          {[...Array(10)].map((_, index) => (
-            <div key={index} className="mb-4">
-              <Skeleton className="h-4 w-3/4 mb-2" />
-              <Skeleton className="h-4 w-1/4" />
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[...Array(9)].map((_, index) => (
+            <Card key={index} className="w-full">
+              <CardHeader>
+                <Skeleton className="h-4 w-3/4 mb-2" />
+              </CardHeader>
+              <CardContent>
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-2/3" />
+              </CardContent>
+              <CardFooter>
+                <Skeleton className="h-8 w-24" />
+              </CardFooter>
+            </Card>
           ))}
         </div>
       ) : (
-        <ul>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredStories.map(story => (
-            <li key={story.id} className="mb-4">
-              <h2 className="text-xl font-semibold">{story.title}</h2>
-              <p className="text-sm text-gray-600">Upvotes: {story.score}</p>
-              <Button
-                variant="link"
-                onClick={() => window.open(story.url, '_blank')}
-              >
-                Read More
-              </Button>
-            </li>
+            <Card key={story.id} className="w-full">
+              <CardHeader>
+                <CardTitle>{story.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-gray-600">Upvotes: {story.score}</p>
+              </CardContent>
+              <CardFooter>
+                <Button
+                  variant="outline"
+                  onClick={() => window.open(story.url, '_blank')}
+                >
+                  Read More
+                </Button>
+              </CardFooter>
+            </Card>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
